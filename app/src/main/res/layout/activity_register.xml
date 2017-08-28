@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:weightSum="1"
+    tools:context="com.wissen.mesut.j6_5authentication.RegisterActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.50"
+        android:src="@drawable/ic_launcher" />
+
+    <EditText
+        android:id="@+id/txtEmail_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/txtmarginleftright"
+        android:layout_marginRight="@dimen/txtmarginleftright"
+        android:background="@color/colorPrimary"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/txtpaddig"
+        android:textColor="@color/colorPrimaryLight"
+        android:textColorHint="@color/colorPrimaryLight"
+        android:textSize="@dimen/textsize" />
+
+    <EditText
+        android:id="@+id/txtPassword_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/txtmarginleftright"
+        android:layout_marginRight="@dimen/txtmarginleftright"
+        android:layout_marginTop="@dimen/txtmargintop"
+        android:background="@color/colorPrimary"
+        android:hint="@string/password"
+        android:inputType="numberPassword"
+        android:padding="@dimen/txtpaddig"
+        android:textColor="@color/colorPrimaryLight"
+        android:textColorHint="@color/colorPrimaryLight"
+        android:textSize="@dimen/textsize" />
+
+    <Button
+        android:id="@+id/btnKayitOl_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/txtmarginleftright"
+        android:layout_marginRight="@dimen/txtmarginleftright"
+        android:layout_marginTop="@dimen/txtmargintop"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/txtpaddig"
+        android:text="@string/kayitol"
+        android:textColor="@color/colorPrimaryLight"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnGirisYap_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/txtmarginleftright"
+        android:layout_marginRight="@dimen/txtmarginleftright"
+        android:layout_marginTop="@dimen/txtmargintop"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/txtpaddig"
+        android:text="@string/girisyap"
+        android:textColor="@color/colorPrimaryLight"
+        android:textStyle="bold" />
+</LinearLayout>
