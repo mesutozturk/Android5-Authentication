@@ -54,6 +54,7 @@ public class LoginActivity extends BaseActivity {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
                         Toast.makeText(LoginActivity.this, "Email adresinizi doğrulayın!", Toast.LENGTH_SHORT).show();
+                        kullaniciDogrula();
                     }
                 } else if (!task.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Kullanıcı adı veya şifre hatalı", Toast.LENGTH_SHORT).show();
@@ -63,5 +64,18 @@ public class LoginActivity extends BaseActivity {
                 hideProgressDialog();
             }
         });
+    }
+
+    private void kullaniciDogrula() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(LoginActivity.this, "Posta kutunuzu kontrol edin", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+        }
     }
 }
