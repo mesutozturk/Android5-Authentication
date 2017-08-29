@@ -40,6 +40,19 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                Toast.makeText(this, "Hoşgeldiniz", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MainActivity.class));
+            }
+        }
+    }
+
     private void girisYap(String email, String pass) {
         if (!validateForm(txtEmail, txtPassword)) return;
         showProgressDialog("Giriş", "Sisteme giriş yapılıyor");
