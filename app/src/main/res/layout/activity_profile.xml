@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/txtpaddig"
+    tools:context="com.wissen.mesut.j6_5authentication.ProfileActivity">
+
+    <EditText
+        android:id="@+id/profil_duzenle_txtad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/ad"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/profil_duzenle_txtsoyad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/soyad"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/profil_duzenle_txtemail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/profil_duzenle_btnguncelle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/guncelle" />
+</LinearLayout>

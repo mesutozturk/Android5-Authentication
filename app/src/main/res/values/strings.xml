@@ -12,4 +12,8 @@
 
     <string name="action_settings">Ayarlar</string>
     <string name="title_activity_main">To-Do Ana Sayfa</string>
+    <string name="profil">Profilim</string>
+    <string name="ad">Ad</string>
+    <string name="soyad">Soyad</string>
+    <string name="guncelle">Güncelle</string>
 </resources>
