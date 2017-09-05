@@ -11,13 +11,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.wissen.mesut.j6_5authentication.model.Kisi;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ImageView nav_userimg;
+    TextView nav_txtAdSoyad, nav_txtEmail;
+    FirebaseUser user;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    Kisi kullanici;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +59,33 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if (user == null) finish();
+
+        nav_userimg = header.findViewById(R.id.nav_userimg);
+        nav_txtAdSoyad = header.findViewById(R.id.nav_txtAdSoyad);
+        nav_txtEmail = header.findViewById(R.id.nav_txtEmail);
+
+        nav_txtEmail.setText(user.getEmail());
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("uyeler");
+        Query query = myRef.child(user.getUid());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                kullanici = dataSnapshot.getValue(Kisi.class);
+                nav_txtAdSoyad.setText(String.format("%s %s", kullanici.getAd() == null ? "Ad" : kullanici.getAd(), kullanici.getSoyad() == null ? "Soyad" : kullanici.getSoyad()));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
