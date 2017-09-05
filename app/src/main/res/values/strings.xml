@@ -17,4 +17,6 @@
     <string name="soyad">Soyad</string>
     <string name="guncelle">Güncelle</string>
     <string name="sifremiunuttum">Şiremi Unuttum</string>
+    <string name="cikisyap">Çıkış Yap</string>
+    <string name="takvim">Takvim</string>
 </resources>

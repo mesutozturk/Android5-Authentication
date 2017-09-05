@@ -1,9 +1,12 @@
 package com.wissen.mesut.j6_5authentication;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,15 +19,19 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
 
-import java.time.chrono.IsoEra;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ProfileActivity extends BaseActivity {
     EditText txtAd, txtSoyad, txtEmail;
-    Button btnGuncelle;
+    TextView txtDogumTarihi;
+    Button btnGuncelle, btnTakvim;
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myRef;
     Kisi kullanici;
+    Date seciliTarih;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,35 @@ public class ProfileActivity extends BaseActivity {
         txtSoyad = (EditText) findViewById(R.id.profil_duzenle_txtsoyad);
         txtEmail = (EditText) findViewById(R.id.profil_duzenle_txtemail);
         btnGuncelle = (Button) findViewById(R.id.profil_duzenle_btnguncelle);
+        txtDogumTarihi = (TextView) findViewById(R.id.profil_duzenle_txtDogumTarihi);
+        btnTakvim = (Button) findViewById(R.id.profil_duzenle_btnTakvim);
+        btnTakvim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePicker;
+                datePicker = new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        seciliTarih = new Date(year - 1900, monthOfYear, dayOfMonth);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+
+                        txtDogumTarihi.setText(simpleDateFormat.format(seciliTarih));
+                    }
+                }, year, month, day);
+                datePicker.setTitle("Doğum Tarihinizi Seçiniz");
+                datePicker.setButton(DatePickerDialog.BUTTON_POSITIVE, "Seç", datePicker);
+                datePicker.setButton(DatePickerDialog.BUTTON_NEGATIVE, "İptal", datePicker);
+
+                datePicker.show();
+            }
+        });
+
         showProgressDialog("Lütfen Bekleyiniz", "Profil bilginize erişiliyor");
 
         mAuth = FirebaseAuth.getInstance();
@@ -50,6 +86,12 @@ public class ProfileActivity extends BaseActivity {
                 txtAd.setText(kullanici.getAd());
                 txtSoyad.setText(kullanici.getSoyad());
                 txtEmail.setText(kullanici.getEmail());
+                if(kullanici.getDogumTarihi()!=null){
+                    Date dtarihi= new Date(kullanici.getDogumTarihi());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+                    txtDogumTarihi.setText(simpleDateFormat.format(dtarihi));
+                }
+
                 hideProgressDialog();
             }
 
@@ -69,10 +111,12 @@ public class ProfileActivity extends BaseActivity {
                 guncellenecekKisi.setEmail(txtEmail.getText().toString());
                 guncellenecekKisi.setAd(txtAd.getText().toString());
                 guncellenecekKisi.setSoyad(txtSoyad.getText().toString());
+                if (seciliTarih != null)
+                    guncellenecekKisi.setDogumTarihi(seciliTarih.toString());
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference().child("uyeler");
                 myRef.child(user.getUid()).setValue(guncellenecekKisi);
-                if(emailDegistiMi){
+                if (emailDegistiMi) {
                     mAuth = FirebaseAuth.getInstance();
                     user = mAuth.getCurrentUser();
                     user.updateEmail(txtEmail.getText().toString());

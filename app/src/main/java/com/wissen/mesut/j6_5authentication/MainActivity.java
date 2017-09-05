@@ -141,8 +141,11 @@ public class MainActivity extends BaseActivity
         if (id == R.id.nav_profil) {
             //profil sayfası açılacak
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_cikis) {
+            mAuth = FirebaseAuth.getInstance();
+            Toast.makeText(this, "Güle güle sahip", Toast.LENGTH_SHORT).show();
+            mAuth.signOut();
+            finish();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

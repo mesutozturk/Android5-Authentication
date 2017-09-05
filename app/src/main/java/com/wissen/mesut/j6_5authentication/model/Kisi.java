@@ -5,7 +5,15 @@ package com.wissen.mesut.j6_5authentication.model;
  */
 
 public class Kisi {
-    private String id, ad, soyad, email;
+    private String id, ad, soyad, email,dogumTarihi;
+
+    public String getDogumTarihi() {
+        return dogumTarihi;
+    }
+
+    public void setDogumTarihi(String dogumTarihi) {
+        this.dogumTarihi = dogumTarihi;
+    }
 
     public String getId() {
         return id;

@@ -3,6 +3,7 @@ package com.wissen.mesut.j6_5authentication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,12 +53,15 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 mAuth = FirebaseAuth.getInstance();
-                mAuth.sendPasswordResetEmail(txtEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(LoginActivity.this, txtEmail.getText().toString() + " adresine parola sıfırlama linki gönderildi", Toast.LENGTH_LONG).show();
-                    }
-                });
+                if (TextUtils.isEmpty(txtEmail.getText()))
+                    Toast.makeText(LoginActivity.this, "Mail Adresini yazınız", Toast.LENGTH_SHORT).show();
+                else
+                    mAuth.sendPasswordResetEmail(txtEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(LoginActivity.this, txtEmail.getText().toString() + " adresine parola sıfırlama linki gönderildi", Toast.LENGTH_LONG).show();
+                        }
+                    });
             }
         });
     }
@@ -95,6 +99,7 @@ public class LoginActivity extends BaseActivity {
                 startActivity(new Intent(this, MainActivity.class));
             }
         }
+        hideProgressDialog();
     }
 
     private void girisYap(String email, String pass) {
