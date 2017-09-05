@@ -22,14 +22,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
 
 public class LoginActivity extends BaseActivity {
-    Button btnLogin, btnRegister;
+    Button btnLogin, btnRegister, btnSifremiUnuttum;
     EditText txtEmail, txtPassword;
     FirebaseDatabase database;
     DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        btnSifremiUnuttum = (Button) findViewById(R.id.btnSifremiUnuttum_login);
         btnLogin = (Button) findViewById(R.id.btnGirisYap_login);
         btnRegister = (Button) findViewById(R.id.btnKayitOl_login);
         txtEmail = (EditText) findViewById(R.id.txtEmail_login);
@@ -46,24 +48,36 @@ public class LoginActivity extends BaseActivity {
                 girisYap(txtEmail.getText().toString(), txtPassword.getText().toString());
             }
         });
+        btnSifremiUnuttum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.sendPasswordResetEmail(txtEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(LoginActivity.this, txtEmail.getText().toString() + " adresine parola sıfırlama linki gönderildi", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        showProgressDialog("Giriş","Lütfen Bekleyin");
+        showProgressDialog("Giriş", "Lütfen Bekleyin");
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             if (user.isEmailVerified()) {
-                database= FirebaseDatabase.getInstance();
-                myRef=database.getReference().child("uyeler");
-                Query query=myRef.child(user.getUid());
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference().child("uyeler");
+                Query query = myRef.child(user.getUid());
                 query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(!dataSnapshot.exists()){
-                            Kisi yeniKisi= new Kisi();
+                        if (!dataSnapshot.exists()) {
+                            Kisi yeniKisi = new Kisi();
                             yeniKisi.setEmail(user.getEmail());
                             yeniKisi.setId(user.getUid());
                             myRef.child(user.getUid()).setValue(yeniKisi);

@@ -67,6 +67,18 @@
         android:text="@string/uyeolmakistiyorum"
         android:textColor="@color/colorPrimaryLight"
         android:textStyle="bold" />
+    <Button
+        android:id="@+id/btnSifremiUnuttum_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/txtmarginleftright"
+        android:layout_marginRight="@dimen/txtmarginleftright"
+        android:layout_marginTop="@dimen/txtmargintop"
+        android:background="@color/colorPrimaryDark"
+        android:padding="@dimen/txtpaddig"
+        android:text="@string/sifremiunuttum"
+        android:textColor="@color/colorPrimaryLight"
+        android:textStyle="bold" />
 
 
 </LinearLayout>
