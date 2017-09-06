@@ -1,11 +1,25 @@
 package com.wissen.mesut.j6_5authentication.model;
 
+import java.util.UUID;
+
 /**
  * Created by Mesut on 6.09.2017.
  */
 
 public class Yapilacak {
-    private String icerik, ekleyen, eklenmeZamani, yapilmaZamani;
+    private String icerik, ekleyen, eklenmeZamani, yapilmaZamani,id;
+
+    public Yapilacak() {
+        this.id= UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getIcerik() {
         return icerik;
@@ -37,5 +51,10 @@ public class Yapilacak {
 
     public void setYapilmaZamani(String yapilmaZamani) {
         this.yapilmaZamani = yapilmaZamani;
+    }
+
+    @Override
+    public String toString() {
+        return icerik;
     }
 }
