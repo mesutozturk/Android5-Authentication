@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.myhexaville.smartimagepicker.ImagePicker;
 import com.myhexaville.smartimagepicker.OnImagePickedListener;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
+import com.wissen.mesut.j6_5authentication.tool.AppTool;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -123,6 +125,9 @@ public class ProfileActivity extends BaseActivity {
                 guncellenecekKisi.setSoyad(txtSoyad.getText().toString());
                 if (seciliTarih != null)
                     guncellenecekKisi.setDogumTarihi(seciliTarih.toString());
+                if (imagePicker != null) {
+                    guncellenecekKisi.setFotograf(Base64.encodeToString(AppTool.resimToByte(imgProfil), Base64.DEFAULT));
+                }
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference().child("uyeler");
                 myRef.child(user.getUid()).setValue(guncellenecekKisi);
@@ -166,6 +171,7 @@ public class ProfileActivity extends BaseActivity {
                 imgProfil.setImageURI(imageUri);
             }
         });
-        imagePicker.setWithImageCrop(1,1);
+        imagePicker.setWithImageCrop(1, 1);
     }
+
 }
