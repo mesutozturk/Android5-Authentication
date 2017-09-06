@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -48,8 +47,8 @@ public class MainActivity extends BaseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Aynı Toast Gibi çalışmakta", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Aynı Toast Gibi çalışmakta", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, AddTodo.class));
             }
         });
 
@@ -80,7 +79,7 @@ public class MainActivity extends BaseActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 kullanici = dataSnapshot.getValue(Kisi.class);
                 nav_txtAdSoyad.setText(String.format("%s %s", kullanici.getAd() == null ? "Ad" : kullanici.getAd(), kullanici.getSoyad() == null ? "Soyad" : kullanici.getSoyad()));
-                if(kullanici.getFotograf()!=null)
+                if (kullanici.getFotograf() != null)
                     nav_userimg.setImageBitmap(AppTool.stringToBitmap(kullanici.getFotograf()));
             }
 
