@@ -1,11 +1,15 @@
 package com.wissen.mesut.j6_5authentication;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.myhexaville.smartimagepicker.ImagePicker;
+import com.myhexaville.smartimagepicker.OnImagePickedListener;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
 
 import java.text.SimpleDateFormat;
@@ -32,11 +38,14 @@ public class ProfileActivity extends BaseActivity {
     DatabaseReference myRef;
     Kisi kullanici;
     Date seciliTarih;
+    ImageView imgProfil;
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        imgProfil = (ImageView) findViewById(R.id.profil_duzenle_imgview);
         txtAd = (EditText) findViewById(R.id.profil_duzenle_txtad);
         txtSoyad = (EditText) findViewById(R.id.profil_duzenle_txtsoyad);
         txtEmail = (EditText) findViewById(R.id.profil_duzenle_txtemail);
@@ -128,5 +137,35 @@ public class ProfileActivity extends BaseActivity {
                 finish();
             }
         });
+
+        imgProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshImagePicker();
+                imagePicker.choosePicture(true);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imagePicker.handleActivityResult(resultCode, requestCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imagePicker.handlePermission(requestCode, grantResults);
+    }
+
+    private void refreshImagePicker() {
+        imagePicker = new ImagePicker(this, null, new OnImagePickedListener() {
+            @Override
+            public void onImagePicked(Uri imageUri) {
+                imgProfil.setImageURI(imageUri);
+            }
+        });
+        imagePicker.setWithImageCrop(1,1);
     }
 }
