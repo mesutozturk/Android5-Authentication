@@ -86,9 +86,10 @@ public class ProfileActivity extends BaseActivity {
                 txtAd.setText(kullanici.getAd());
                 txtSoyad.setText(kullanici.getSoyad());
                 txtEmail.setText(kullanici.getEmail());
-                if(kullanici.getDogumTarihi()!=null){
-                    Date dtarihi= new Date(kullanici.getDogumTarihi());
+                if (kullanici.getDogumTarihi() != null) {
+                    Date dtarihi = new Date(kullanici.getDogumTarihi());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+                    seciliTarih = dtarihi;
                     txtDogumTarihi.setText(simpleDateFormat.format(dtarihi));
                 }
 
