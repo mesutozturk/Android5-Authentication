@@ -1,6 +1,8 @@
 package com.wissen.mesut.j6_5authentication.tool;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -17,5 +19,10 @@ public class AppTool {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
+    }
+
+    public static Bitmap stringToBitmap(String base64) {
+        byte[] decoded = Base64.decode(base64, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
     }
 }

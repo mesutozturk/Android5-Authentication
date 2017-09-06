@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
+import com.wissen.mesut.j6_5authentication.tool.AppTool;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,6 +80,8 @@ public class MainActivity extends BaseActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 kullanici = dataSnapshot.getValue(Kisi.class);
                 nav_txtAdSoyad.setText(String.format("%s %s", kullanici.getAd() == null ? "Ad" : kullanici.getAd(), kullanici.getSoyad() == null ? "Soyad" : kullanici.getSoyad()));
+                if(kullanici.getFotograf()!=null)
+                    nav_userimg.setImageBitmap(AppTool.stringToBitmap(kullanici.getFotograf()));
             }
 
             @Override

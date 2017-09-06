@@ -103,7 +103,9 @@ public class ProfileActivity extends BaseActivity {
                     seciliTarih = dtarihi;
                     txtDogumTarihi.setText(simpleDateFormat.format(dtarihi));
                 }
-
+                if (kullanici.getFotograf() != null) {
+                    imgProfil.setImageBitmap(AppTool.stringToBitmap(kullanici.getFotograf()));
+                }
                 hideProgressDialog();
             }
 
