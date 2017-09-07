@@ -13,12 +13,11 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:weightSum="1">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_userimg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.95"
-        android:scaleType="fitXY"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <TextView

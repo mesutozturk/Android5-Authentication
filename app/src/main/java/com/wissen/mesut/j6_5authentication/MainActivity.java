@@ -32,11 +32,13 @@ import com.wissen.mesut.j6_5authentication.tool.AppTool;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static int sayac = 0;
-    ImageView nav_userimg;
+    CircleImageView nav_userimg;
     TextView nav_txtAdSoyad, nav_txtEmail;
     FirebaseUser user;
     FirebaseDatabase database;
