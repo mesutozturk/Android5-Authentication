@@ -12,15 +12,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.wissen.mesut.j6_5authentication.R;
+import com.wissen.mesut.j6_5authentication.tool.AppTool;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Mesut on 6.09.2017.
@@ -45,6 +53,8 @@ public class MyAdapter extends ArrayAdapter<Yapilacak> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.todolist_item, parent, false);
         CheckBox checkBox = rowView.findViewById(R.id.lst_checkBox);
+        CircleImageView imgProfil = rowView.findViewById(R.id.lst_imgprofil);
+        TextView txtKullaniciAdi = rowView.findViewById(R.id.lst_txtKullaniciAdi);
         final TextView txtIcerik = rowView.findViewById(R.id.lst_txtIcerik);
         txtIcerik.setText(values.get(position).getIcerik());
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,7 +116,31 @@ public class MyAdapter extends ArrayAdapter<Yapilacak> {
 
             }
         });
+
+        kullaniciBilgisiniGetir(values.get(position).getEkleyen(), imgProfil, txtKullaniciAdi);
         return rowView;
+    }
+
+    private void kullaniciBilgisiniGetir(String ekleyen, final CircleImageView imageView, final TextView textView) {
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("uyeler");
+        final Query query = myRef.child(ekleyen);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Kisi kisi = dataSnapshot.getValue(Kisi.class);
+                if (kisi.getAd() != null && kisi.getSoyad() != null)
+                    textView.setText(kisi.getAd() + " " + kisi.getSoyad());
+                if (kisi.getFotograf() != null)
+                    imageView.setImageBitmap(AppTool.stringToBitmap(kisi.getFotograf()));
+                query.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

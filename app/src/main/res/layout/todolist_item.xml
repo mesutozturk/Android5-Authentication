@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/txtpaddig"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/lst_imgprofil"
+            android:layout_width="@dimen/imgprofilen"
+            android:layout_height="@dimen/imgprofilboy"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@android:drawable/ic_menu_camera"/>
+
+        <TextView
+            android:id="@+id/lst_txtKullaniciAdi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/txtpaddig"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical"
+            android:text="Kamil"
+            android:textSize="@dimen/textsize"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -6,12 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    static int sayac = 0;
     ImageView nav_userimg;
     TextView nav_txtAdSoyad, nav_txtEmail;
     FirebaseUser user;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity
     Kisi kullanici;
     ListView listView;
     ArrayList<Yapilacak> yapilacakList;
+    SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,13 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         listView = (ListView) findViewById(R.id.main_listView);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.main_swiperrefresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listeyiDoldur();
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,14 +105,13 @@ public class MainActivity extends BaseActivity
 
             }
         });
-        listeyiDoldur();
     }
 
     private void listeyiDoldur() {
         showProgressDialog("Lütfen bekleyin", "Veritabanına bağlantı kuruluyor");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        Query yapilacaklarQuery = myRef.child("yapilacaklar").orderByChild("eklenmeZamani");
+        final Query yapilacaklarQuery = myRef.child("yapilacaklar").orderByChild("eklenmeZamani");
         yapilacaklarQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -115,6 +123,8 @@ public class MainActivity extends BaseActivity
                 MyAdapter adapter = new MyAdapter(MainActivity.this, yapilacakList);
                 listView.setAdapter(adapter);
                 hideProgressDialog();
+                yapilacaklarQuery.removeEventListener(this);
+                swipeRefresh.setRefreshing(false);
             }
 
             @Override
@@ -133,6 +143,7 @@ public class MainActivity extends BaseActivity
             Toast.makeText(this, "Lütfen giriş yapın", Toast.LENGTH_SHORT).show();
             finish();
         }
+        listeyiDoldur();
     }
 
     @Override
@@ -141,6 +152,11 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            sayac++;
+            if (sayac == 2) {
+                mAuth.signOut();
+                finish();
+            }
             super.onBackPressed();
         }
     }
