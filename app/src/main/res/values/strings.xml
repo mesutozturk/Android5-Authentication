@@ -5,13 +5,11 @@
     <string name="kayitol">Kayıt Ol</string>
     <string name="girisyap">Giriş Yap</string>
     <string name="uyeolmakistiyorum">Üye Olmak İstiyorum</string>
-    <string name="title_activity_main_menu">To-Do Ana Sayfa Menü</string>
 
     <string name="navigation_drawer_open">Menüyü Aç</string>
     <string name="navigation_drawer_close">Menüyü Kapat</string>
 
     <string name="action_settings">Ayarlar</string>
-    <string name="title_activity_main">To-Do Ana Sayfa</string>
     <string name="profil">Profilim</string>
     <string name="ad">Ad</string>
     <string name="soyad">Soyad</string>
