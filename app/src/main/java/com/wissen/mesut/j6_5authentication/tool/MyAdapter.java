@@ -1,4 +1,4 @@
-package com.wissen.mesut.j6_5authentication.model;
+package com.wissen.mesut.j6_5authentication.tool;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,7 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.wissen.mesut.j6_5authentication.R;
-import com.wissen.mesut.j6_5authentication.tool.AppTool;
+import com.wissen.mesut.j6_5authentication.model.Kisi;
+import com.wissen.mesut.j6_5authentication.model.Yapilacak;
 
 import java.util.ArrayList;
 import java.util.Date;

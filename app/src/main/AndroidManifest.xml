@@ -30,7 +30,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".AddTodo"></activity>
+        <activity android:name=".AddTodo" />
     </application>
 
 </manifest>

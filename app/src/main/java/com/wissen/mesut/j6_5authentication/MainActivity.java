@@ -1,5 +1,7 @@
 package com.wissen.mesut.j6_5authentication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,11 +10,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +30,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
-import com.wissen.mesut.j6_5authentication.model.MyAdapter;
 import com.wissen.mesut.j6_5authentication.model.Yapilacak;
 import com.wissen.mesut.j6_5authentication.tool.AppTool;
+import com.wissen.mesut.j6_5authentication.tool.CustomItemClickListener;
+import com.wissen.mesut.j6_5authentication.tool.CustomItemLongClickListener;
+import com.wissen.mesut.j6_5authentication.tool.MyRecyclerAdapter;
 
 import java.util.ArrayList;
 
@@ -47,6 +53,8 @@ public class MainActivity extends BaseActivity
     ListView listView;
     ArrayList<Yapilacak> yapilacakList;
     SwipeRefreshLayout swipeRefresh;
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,13 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        listView = (ListView) findViewById(R.id.main_listView);
+        //listView = (ListView) findViewById(R.id.main_listView);
+        recyclerView = (RecyclerView) findViewById(R.id.main_recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+        recyclerView.setLayoutManager(layoutManager);
+
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.main_swiperrefresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -122,8 +136,48 @@ public class MainActivity extends BaseActivity
                     Yapilacak yeni = gelen.getValue(Yapilacak.class);
                     yapilacakList.add(yeni);
                 }
-                MyAdapter adapter = new MyAdapter(MainActivity.this, yapilacakList);
-                listView.setAdapter(adapter);
+                //MyAdapter adapter = new MyAdapter(MainActivity.this, yapilacakList);
+                //listView.setAdapter(adapter);
+                MyRecyclerAdapter adapter = new MyRecyclerAdapter(yapilacakList, new CustomItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+
+                    }
+
+                }, new CustomItemLongClickListener() {
+                    @Override
+                    public void onItemLongClick(View v, int position) {
+                        final int pos = position;
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        Yapilacak silinecek = yapilacakList.get(pos);
+                                        database = FirebaseDatabase.getInstance();
+                                        myRef = database.getReference().child("yapilacaklar");
+                                        myRef.child(silinecek.getId()).removeValue();
+                                        Toast.makeText(MainActivity.this, "Silindi", Toast.LENGTH_SHORT).show();
+                                        listeyiDoldur();
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        Toast.makeText(MainActivity.this, "İptal edildi", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Emin misiniz?").setPositiveButton("Evet", dialogClickListener)
+                                .setNegativeButton("Bilemiyorum", dialogClickListener).show();
+                    }
+                });
+                //recyclerView.setHasFixedSize(true);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
                 hideProgressDialog();
                 yapilacaklarQuery.removeEventListener(this);
                 swipeRefresh.setRefreshing(false);
