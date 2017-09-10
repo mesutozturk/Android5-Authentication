@@ -15,15 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.myhexaville.smartimagepicker.ImagePicker;
 import com.myhexaville.smartimagepicker.OnImagePickedListener;
+import com.wissen.mesut.j6_5authentication.base.BaseActivity;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
 import com.wissen.mesut.j6_5authentication.tool.AppTool;
 
@@ -35,9 +34,6 @@ public class ProfileActivity extends BaseActivity {
     EditText txtAd, txtSoyad, txtEmail;
     TextView txtDogumTarihi;
     Button btnGuncelle, btnTakvim;
-    FirebaseUser user;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
     Kisi kullanici;
     Date seciliTarih;
     ImageView imgProfil;
@@ -88,7 +84,7 @@ public class ProfileActivity extends BaseActivity {
         if (user == null) finish();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference().child("uyeler");
-        Query query = myRef.child(user.getUid());
+        final Query query = myRef.child(user.getUid());
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,6 +103,7 @@ public class ProfileActivity extends BaseActivity {
                     imgProfil.setImageBitmap(AppTool.stringToBitmap(kullanici.getFotograf()));
                 }
                 hideProgressDialog();
+                //query.removeEventListener(this);
             }
 
             @Override
@@ -129,6 +126,8 @@ public class ProfileActivity extends BaseActivity {
                     guncellenecekKisi.setDogumTarihi(seciliTarih.toString());
                 if (imagePicker != null) {
                     guncellenecekKisi.setFotograf(Base64.encodeToString(AppTool.resimToByte(imgProfil), Base64.DEFAULT));
+                } else {
+                    guncellenecekKisi.setFotograf(kullanici.getFotograf());
                 }
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference().child("uyeler");

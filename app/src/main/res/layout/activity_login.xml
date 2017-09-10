@@ -3,10 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:weightSum="1"
     tools:context="com.wissen.mesut.j6_5authentication.RegisterActivity">
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnGoogleGirisYap_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/txtmarginleftright"
+        android:layout_marginRight="@dimen/txtmarginleftright"
+        android:layout_marginTop="@dimen/txtmargintop"
+        android:padding="@dimen/txtpaddig"
+        android:text="@string/girisyap"
+        android:textColor="@color/colorPrimaryLight"
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -55,6 +67,7 @@
         android:text="@string/girisyap"
         android:textColor="@color/colorPrimaryLight"
         android:textStyle="bold" />
+
     <Button
         android:id="@+id/btnKayitOl_login"
         android:layout_width="match_parent"
@@ -67,6 +80,7 @@
         android:text="@string/uyeolmakistiyorum"
         android:textColor="@color/colorPrimaryLight"
         android:textStyle="bold" />
+
     <Button
         android:id="@+id/btnSifremiUnuttum_login"
         android:layout_width="match_parent"

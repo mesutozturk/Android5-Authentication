@@ -31,6 +31,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".AddTodo" />
+
+        <receiver
+            android:name=".tool.MyAuthReciever"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="MyAuth_Receiver" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

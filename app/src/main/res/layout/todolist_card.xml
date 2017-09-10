@@ -13,12 +13,14 @@
         android:layout_gravity="center"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@animator/lift_on_touch"
+        app:cardBackgroundColor="@color/cardview_light_background"
         app:cardCornerRadius="@dimen/cardradius">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/cardpadding">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,9 +34,9 @@
                     android:layout_width="@dimen/imgprofilen"
                     android:layout_height="@dimen/imgprofilboy"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@android:drawable/ic_menu_camera"
                     app:civ_border_color="@color/colorPrimaryLight"
-                    app:civ_border_width="1dp"/>
+                    app:civ_border_width="1dp"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
 
                 <TextView
                     android:id="@+id/card_txtKullaniciAdi"

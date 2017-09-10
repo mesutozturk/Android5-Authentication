@@ -25,10 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.wissen.mesut.j6_5authentication.base.BaseActivity;
 import com.wissen.mesut.j6_5authentication.model.Kisi;
 import com.wissen.mesut.j6_5authentication.model.Yapilacak;
 import com.wissen.mesut.j6_5authentication.tool.AppTool;
@@ -46,9 +46,7 @@ public class MainActivity extends BaseActivity
     static int sayac = 0;
     CircleImageView nav_userimg;
     TextView nav_txtAdSoyad, nav_txtEmail;
-    FirebaseUser user;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+
     Kisi kullanici;
     ListView listView;
     ArrayList<Yapilacak> yapilacakList;

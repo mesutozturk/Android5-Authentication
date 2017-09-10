@@ -1,4 +1,4 @@
-package com.wissen.mesut.j6_5authentication;
+package com.wissen.mesut.j6_5authentication.base;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -6,14 +6,20 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Mesut on 28.08.2017.
  */
 
 public class BaseActivity extends AppCompatActivity {
-    ProgressDialog mProgressDialog;
-    FirebaseAuth mAuth;
+    public ProgressDialog mProgressDialog;
+    public FirebaseAuth mAuth;
+    public FirebaseUser user;
+    public FirebaseDatabase database;
+    public DatabaseReference myRef;
 
     public boolean validateForm(EditText txtEmail, EditText txtPass) {
         boolean valid = true;

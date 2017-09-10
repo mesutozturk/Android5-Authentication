@@ -8,9 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wissen.mesut.j6_5authentication.base.BaseActivity;
 import com.wissen.mesut.j6_5authentication.model.Yapilacak;
 
 import java.util.Date;
@@ -18,9 +17,6 @@ import java.util.Date;
 public class AddTodo extends BaseActivity {
     Button btnEkle;
     EditText txtYapilacak;
-    FirebaseUser user;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

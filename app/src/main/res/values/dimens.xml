@@ -11,6 +11,6 @@
     <dimen name="imgprofilen">50dp</dimen>
     <dimen name="imgprofilboy">50dp</dimen>
     <dimen name="cardradius">5dp</dimen>
-    <dimen name="cardheight">120dp</dimen>
-    <dimen name="cardpadding">5dp</dimen>
+    <dimen name="cardheight">130dp</dimen>
+    <dimen name="cardpadding">2dp</dimen>
 </resources>

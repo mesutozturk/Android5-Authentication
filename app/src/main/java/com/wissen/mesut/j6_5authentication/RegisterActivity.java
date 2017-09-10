@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.wissen.mesut.j6_5authentication.base.BaseActivity;
 
 public class RegisterActivity extends BaseActivity {
     Button btnLogin, btnRegister;
@@ -49,26 +50,10 @@ public class RegisterActivity extends BaseActivity {
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                    dogrulamaMailiYolla();
-                else{
+                if (!task.isSuccessful())
                     Toast.makeText(RegisterActivity.this, "Kayıt işleminde bir hata oluştu", Toast.LENGTH_SHORT).show();
-                }
                 hideProgressDialog();
             }
         });
-    }
-
-    private void dogrulamaMailiYolla() {
-        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
-            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(RegisterActivity.this, "Posta kutunuzu kontrol edin", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            });
-        }
     }
 }
